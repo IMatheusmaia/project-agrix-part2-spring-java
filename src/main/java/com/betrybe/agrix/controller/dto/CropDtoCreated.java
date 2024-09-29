@@ -2,11 +2,13 @@ package com.betrybe.agrix.controller.dto;
 
 import com.betrybe.agrix.entity.CropEntity;
 import com.betrybe.agrix.entity.FarmEntity;
+import java.time.LocalDate;
 
 /**
  * The type Crop dto created.
  */
-public record CropDtoCreated(String name, Double plantedArea) {
+public record CropDtoCreated(String name, Double plantedArea,
+                             String plantedDate, String harvestDate) {
   /**
    * To entity crop entity.
    *
@@ -19,6 +21,8 @@ public record CropDtoCreated(String name, Double plantedArea) {
     crop.setName(cropDto.name());
     crop.setPlantedArea(cropDto.plantedArea());
     crop.setFarm(farm);
+    crop.setPlantedDate(cropDto.plantedDate);
+    crop.setHarvestDate(cropDto.harvestDate);
     return crop;
   }
 }

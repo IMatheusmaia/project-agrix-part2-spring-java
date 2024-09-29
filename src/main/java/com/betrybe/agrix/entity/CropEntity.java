@@ -1,6 +1,5 @@
 package com.betrybe.agrix.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 /**
  * The type Crop entity.
@@ -23,6 +23,9 @@ public class CropEntity {
   private String name;
   private Double plantedArea;
 
+  private LocalDate plantedDate;
+  private LocalDate harvestDate;
+
   @ManyToOne
   @JoinColumn(name = "farm_id")
   private FarmEntity farm;
@@ -36,11 +39,16 @@ public class CropEntity {
    * @param id          the id
    * @param name        the name
    * @param plantedArea the planted area
+   * @param plantedDate the planted date
+   * @param harvestDate the harvest date
    */
-  public CropEntity(Long id, String name, Double plantedArea) {
+  public CropEntity(Long id, String name, Double plantedArea,
+                    LocalDate plantedDate, LocalDate harvestDate) {
     this.id = id;
     this.name = name;
     this.plantedArea = plantedArea;
+    this.plantedDate = plantedDate;
+    this.harvestDate = harvestDate;
   }
 
   public Long getId() {
@@ -73,5 +81,21 @@ public class CropEntity {
 
   public void setFarm(FarmEntity farm) {
     this.farm = farm;
+  }
+
+  public LocalDate getPlantedDate() {
+    return plantedDate;
+  }
+
+  public void setPlantedDate(String plantedDate) {
+    this.plantedDate = LocalDate.parse(plantedDate);
+  }
+
+  public LocalDate getHarvestDate() {
+    return harvestDate;
+  }
+
+  public void setHarvestDate(String harvestDate) {
+    this.harvestDate = LocalDate.parse(harvestDate);
   }
 }
