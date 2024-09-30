@@ -26,4 +26,9 @@ public class FertilizerService {
   public List<FertilizerEntity> getAll() {
     return fertilizerRepository.findAll();
   }
+
+  public FertilizerEntity getById(Long id) {
+    return fertilizerRepository.findById(id).orElse(null);
+  }
+
 }

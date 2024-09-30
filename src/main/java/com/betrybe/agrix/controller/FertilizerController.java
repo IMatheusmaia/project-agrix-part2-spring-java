@@ -2,6 +2,7 @@ package com.betrybe.agrix.controller;
 
 import com.betrybe.agrix.controller.dto.FertilizerDtoCreated;
 import com.betrybe.agrix.controller.dto.FertilizerDtoResponse;
+import com.betrybe.agrix.controller.exception.FertilizerNotFoundException;
 import com.betrybe.agrix.entity.FertilizerEntity;
 import com.betrybe.agrix.service.FertilizerService;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,5 +65,23 @@ public class FertilizerController {
                     .map(FertilizerDtoResponse::fromEntity)
                     .toList()
     );
+  }
+
+  /**
+   * Gets by id.
+   *
+   * @param id the id
+   * @return the by id
+   * @throws FertilizerNotFoundException the fertilizer not found exception
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<FertilizerDtoResponse> getById(@PathVariable Long id)
+          throws FertilizerNotFoundException {
+    FertilizerEntity fertilizer = fertilizerService.getById(id);
+
+    if (fertilizer == null) {
+      throw new FertilizerNotFoundException();
+    }
+    return ResponseEntity.ok().body(FertilizerDtoResponse.fromEntity(fertilizer));
   }
 }
