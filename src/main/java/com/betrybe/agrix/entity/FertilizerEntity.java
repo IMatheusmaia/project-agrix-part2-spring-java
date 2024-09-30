@@ -1,13 +1,13 @@
 package com.betrybe.agrix.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,13 +25,9 @@ public class FertilizerEntity {
   private String brand;
   private String composition;
 
-  @ManyToMany
-  @JoinTable(
-      name = "crop_fertilizer",
-      joinColumns = @JoinColumn(name = "fertilizer_id"),
-      inverseJoinColumns = @JoinColumn(name = "crop_id")
-  )
-  private List<CropEntity> crops;
+  @ManyToMany(mappedBy = "fertilizers")
+  @JsonIgnore
+  private List<CropEntity> crops = new ArrayList<>();
 
   public FertilizerEntity() {
   }

@@ -77,5 +77,6 @@ public class CropService {
     }
 
     crop.setFertilizers(List.of(fertilizer));
+    cropRepository.save(crop);
   }
 }

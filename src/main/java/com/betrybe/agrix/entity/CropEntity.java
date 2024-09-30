@@ -5,10 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,8 +34,13 @@ public class CropEntity {
   @JoinColumn(name = "farm_id")
   private FarmEntity farm;
 
-  @ManyToMany(mappedBy = "crops")
-  private List<FertilizerEntity> fertilizers;
+  @ManyToMany
+  @JoinTable(
+          name = "crop_fertilizer",
+          joinColumns = @JoinColumn(name = "fertilizer_id"),
+          inverseJoinColumns = @JoinColumn(name = "crop_id")
+  )
+  private List<FertilizerEntity> fertilizers = new ArrayList<>();
 
   public CropEntity() {
   }
@@ -109,6 +116,6 @@ public class CropEntity {
   }
 
   public void setFertilizers(List<FertilizerEntity> fertilizers) {
-    this.fertilizers = fertilizers;
+    this.fertilizers.addAll(fertilizers);
   }
 }
