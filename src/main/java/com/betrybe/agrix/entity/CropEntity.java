@@ -5,9 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * The type Crop entity.
@@ -29,6 +31,9 @@ public class CropEntity {
   @ManyToOne
   @JoinColumn(name = "farm_id")
   private FarmEntity farm;
+
+  @ManyToMany(mappedBy = "crops")
+  private List<FertilizerEntity> fertilizers;
 
   public CropEntity() {
   }
@@ -97,5 +102,13 @@ public class CropEntity {
 
   public void setHarvestDate(String harvestDate) {
     this.harvestDate = LocalDate.parse(harvestDate);
+  }
+
+  public List<FertilizerEntity> getFertilizers() {
+    return fertilizers;
+  }
+
+  public void setFertilizers(List<FertilizerEntity> fertilizers) {
+    this.fertilizers = fertilizers;
   }
 }
