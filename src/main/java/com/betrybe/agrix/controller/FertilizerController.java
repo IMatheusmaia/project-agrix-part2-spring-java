@@ -4,13 +4,16 @@ import com.betrybe.agrix.controller.dto.FertilizerDtoCreated;
 import com.betrybe.agrix.controller.dto.FertilizerDtoResponse;
 import com.betrybe.agrix.entity.FertilizerEntity;
 import com.betrybe.agrix.service.FertilizerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * The type Fertilizer controller.
@@ -45,6 +48,20 @@ public class FertilizerController {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(
             FertilizerDtoResponse.fromEntity(newFertilizer)
+    );
+  }
+
+  /**
+   * Gets all.
+   *
+   * @return the all
+   */
+  @GetMapping
+  public ResponseEntity<List<FertilizerDtoResponse>> getAll() {
+    return ResponseEntity.ok().body(
+            fertilizerService.getAll().stream()
+                    .map(FertilizerDtoResponse::fromEntity)
+                    .toList()
     );
   }
 }
