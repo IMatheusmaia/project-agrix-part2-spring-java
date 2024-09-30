@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * The type Crop controller.
@@ -53,5 +55,22 @@ public class CropController {
       throw new CropNotFoundException();
     }
     return ResponseEntity.ok().body(CropDtoResponse.fromEntity(crop));
+  }
+
+  /**
+   * Gets crops by period.
+   *
+   * @param start the start
+   * @param end   the end
+   * @return the crops by period
+   */
+  @GetMapping("/search")
+  public ResponseEntity<List<CropDtoResponse>> getCropsByPeriod(
+          @RequestParam String start, @RequestParam String end
+  ) {
+    return ResponseEntity.ok().body(
+            cropService.getCropsByPeriod(start, end).stream()
+            .map(CropDtoResponse::fromEntity)
+            .toList());
   }
 }
